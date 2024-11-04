@@ -42,7 +42,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <x-primary-button class="ms-3 bg-blue-600 flex gap-x-1">
+            <x-primary-button class="ms-3 flex gap-x-1">
             <span class="w-4 h-4">
               <img src="{{asset('icons/login.svg')}} " alt="">
             </span>

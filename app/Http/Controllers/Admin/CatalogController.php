@@ -12,7 +12,7 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        return view('admin.catalog.index', ['catalog' => Catalog::all()]);
+        return view('catalog.index');
     }
 
     /**

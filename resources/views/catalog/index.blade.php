@@ -1,5 +1,5 @@
 <x-app-layout>
-   <div>
+   <div >
        Hello, Catalog!!!
    </div>
 </x-app-layout>
