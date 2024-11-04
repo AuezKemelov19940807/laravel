@@ -31,7 +31,7 @@
                 </span>
                 <span >Главная</span>
             </a>
-            <a href="{{route('catalog')}}"  class="flex items-center gap-x-2 cursor-pointer ">
+            <a href="{{route('catalog.index')}}"  class="flex items-center gap-x-2 cursor-pointer ">
 
                 <span>
                     <img src="{{asset('icons/category.svg')}}" alt="Category Icon">

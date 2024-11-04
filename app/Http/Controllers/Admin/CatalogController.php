@@ -20,7 +20,7 @@ class CatalogController extends Controller
      */
     public function create()
     {
-        //
+        return view('catalog.create');
     }
 
     /**
@@ -28,7 +28,12 @@ class CatalogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Catalog::create($request->only('name')); // Mass assignment for creation
+        return redirect()->route('catalog.index')->with('success', 'Catalog created successfully.');
     }
 
     /**

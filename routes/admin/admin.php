@@ -7,7 +7,14 @@ use App\Http\Controllers\Admin\CatalogController;
 
 
 
-Route::middleware('auth')->group(function () {
 
-    Route::get('/catalog', [CatalogController::class, 'index'])->name('catalog');
+Route::controller(CatalogController::class)->group(function () {
+    Route::prefix('catalog')->group(function () {
+        Route::name('catalog.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/', 'store')->name('store');
+        });
+    });
 });
+

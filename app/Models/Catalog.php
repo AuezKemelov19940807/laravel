@@ -17,12 +17,12 @@ class Catalog extends Model
 
 
         static::creating(function ($catalog) {
-            $catalog->slug = Str::slug($catalog->title);
+            $catalog->slug = Str::slug($catalog->name);
         });
 
 
         static::updating(function ($catalog) {
-            $catalog->slug = Str::slug($catalog->title);
+            $catalog->slug = Str::slug($catalog->name);
         });
 
     }
