@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Catalog extends Model
 {
     protected $fillable = [
@@ -25,6 +26,12 @@ class Catalog extends Model
             $catalog->slug = Str::slug($catalog->name);
         });
 
+    }
+
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'catalog_category');
     }
 
 }

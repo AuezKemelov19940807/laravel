@@ -12,7 +12,8 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        return view('catalog.index');
+        $catalogs = Catalog::all();
+        return view('catalog.index', ['catalogs' => $catalogs] );
     }
 
     /**
@@ -39,9 +40,19 @@ class CatalogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug)
     {
-        //
+
+        $catalog = Catalog::where('slug', $slug)->firstOrFail();
+
+
+        $categories = $catalog->categories;
+
+
+        return view('catalog.show', [
+            'catalog' => $catalog,
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -49,7 +60,8 @@ class CatalogController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $catalog = Catalog::findOrFail($id);
+        return view('catalog.edit', ['catalog' => $catalog]);
     }
 
     /**
@@ -57,7 +69,15 @@ class CatalogController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $catalog = Catalog::findOrFail($id);
+        $catalog->update($request->only('name'));
+
+        return redirect()->route('catalog.index')->with('success', 'Catalog updated successfully.');
+
     }
 
     /**
@@ -65,6 +85,9 @@ class CatalogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $catalog = Catalog::findOrFail($id);
+        $catalog->delete();
+        return redirect()->route('catalog.index')->with('success', 'Catalog deleted successfully.');
+
     }
 }
