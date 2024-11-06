@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('title');
             $table->string('text');
-            $table->text('top_description');
-            $table->text('bottom_description');
-            $table->boolean('budget');
+            $table->text('top_description')->nullable();
+            $table->text('bottom_description')->nullable();
+            $table->boolean('budget')->default(0);
             $table->timestamps();
         });
     }

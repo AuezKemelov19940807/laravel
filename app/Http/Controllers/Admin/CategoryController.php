@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Catalog;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     public function index()
@@ -23,18 +23,30 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
+
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'text' => 'required|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  // Проверка на допустимый формат изображения
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+        }
+
+        $budget = $request->has('budget') ? 1 : 0;
         Category::create([
-            'name' => $request->input('name'),
+            'title' => $request->input('title'),
             'text' => $request->input('text'),
             'top_description' => $request->input('top_description'),
             'bottom_description' => $request->input('bottom_description'),
-            'budget' => $request->input('budget'),
+            'budget' => $budget,
+            'image' => $imagePath,
         ]);
 
-        return redirect()->route('catalog.show')->with('success', 'Catalog created successfully.');
+        return redirect()->route('catalog.index')->with('success', 'Category created successfully.');
     }
 
 

@@ -1,3 +1,18 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.ck.ck-editor__main {
+    height: 100%;
+}
+
+
+.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+    height: 500px;
+}
+
+
+
+

@@ -13,6 +13,8 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+
 </head>
 <body class="font-sans antialiased   h-full">
 @php
@@ -139,13 +141,34 @@
 {{--        </div>--}}
 
 <script>
+
+    // import { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } from 'ckeditor5';
+    //
+    // import 'ckeditor5/ckeditor5.css';
+
     function toggle() {
         const pages = document.querySelector('.pages')
         const arrow = document.querySelector('.arrow')
         pages.classList.toggle('active');
         arrow.classList.toggle('active');
     }
+
+    // ClassicEditor
+    //     .create( document.querySelector( '#editor' ), {
+    //         plugins: [ Essentials, Bold, Italic, Font, Paragraph ],
+    //         toolbar: [
+    //             'undo', 'redo', '|', 'bold', 'italic', '|',
+    //             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+    //         ]
+    //     } )
+    //     .then( /* ... */ )
+    //     .catch( /* ... */ );
+
+
 </script>
+
+
+
 <style>
     .pages {
         max-height: 0; /* Начальное значение */
