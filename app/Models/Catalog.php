@@ -31,7 +31,7 @@ class Catalog extends Model
 
     public function categories():HasMany
     {
-        return  $this->hasMany(Category::class, 'catalog_slug');
+        return  $this->hasMany(Category::class);
 //        return $this->belongsToMany(Category::class);
     }
 

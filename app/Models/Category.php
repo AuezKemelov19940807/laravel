@@ -18,7 +18,8 @@ class Category extends Model
         'top_description',
         'bottom_description',
         'budget',
-        'image'
+        'image',
+        'catalog_id',
     ];
 
     protected static function boot() {
@@ -39,7 +40,7 @@ class Category extends Model
 
     public function catalog():BelongsTo
     {
-        return  $this->belongsTo(Catalog::class, 'slug');
+        return  $this->belongsTo(Catalog::class, 'catalog_id');
 //        return $this->belongsToMany(Catalog::class, 'catalog_category');
     }
 }

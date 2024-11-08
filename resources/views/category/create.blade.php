@@ -6,6 +6,18 @@
         <x-block>
             <form class="flex flex-col gap-y-5"  action="{{route('category.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+
+                <!-- Выбор каталога -->
+                <div class="flex flex-col gap-y-2 w-fit" >
+                    <label  class="text-xl"  for="catalog_id">Выбрать категорию</label>
+                    <select class="border-[#265078] rounded-md" id="catalog_id" name="catalog_id" required>
+
+                        @foreach($catalogs as $catalog)
+                            <option value="{{ $catalog->id }}">{{ $catalog->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="grid grid-cols-3 gap-x-5 items-center">
                     <label for="Name" class="flex flex-col gap-y-2" >
                         <span class="text-xl" >Название категорий</span>

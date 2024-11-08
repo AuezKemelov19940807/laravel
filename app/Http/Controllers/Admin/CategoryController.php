@@ -17,8 +17,11 @@ class CategoryController extends Controller
     }
 
     public function create()
+
     {
-        return view('category.create');
+        $catalogs = Catalog::all();
+        $categories = Category::all();
+        return view('category.create', ['catalogs' => $catalogs, 'categories' => $categories ]);
     }
 
     public function store(Request $request)
@@ -28,6 +31,7 @@ class CategoryController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'text' => 'required|string|max:1000',
+            'catalog_id' => 'required|exists:catalogs,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  // Проверка на допустимый формат изображения
         ]);
 
@@ -40,6 +44,7 @@ class CategoryController extends Controller
         Category::create([
             'title' => $request->input('title'),
             'text' => $request->input('text'),
+            'catalog_id' => $request->input('catalog_id'),
             'top_description' => $request->input('top_description'),
             'bottom_description' => $request->input('bottom_description'),
             'budget' => $budget,

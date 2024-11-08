@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
-            $table->string('catalog_slug')->unique();
+            $table->unsignedBigInteger('catalog_id');
             $table->string('title');
-            $table->string('text');
+            $table->string('text')->nullable();
             $table->text('top_description')->nullable();
             $table->text('bottom_description')->nullable();
             $table->boolean('budget')->default(0);
+            $table->foreign('catalog_id')->references('id')->on('catalogs')->onDelete('cascade');
             $table->timestamps();
         });
     }
