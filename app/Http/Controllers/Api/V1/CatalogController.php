@@ -12,4 +12,18 @@ class CatalogController extends Controller
         $catalogs = Catalog::all();
         return response()->json($catalogs);
     }
+
+
+    public function show(string $slug)
+    {
+
+        $catalog = Catalog::where('slug', $slug)->firstOrFail();
+
+
+        $categories = $catalog->categories;
+
+        return response()->json($categories);
+
+    }
+
 }

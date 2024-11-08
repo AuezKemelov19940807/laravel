@@ -9,6 +9,7 @@ Route::prefix('v1')->group(function () {
             ->name('api.v1.catalog.')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
+                Route::get('/{slug}', 'show')->name('show');
             });
     });
 });
