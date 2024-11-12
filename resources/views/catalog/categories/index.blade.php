@@ -1,35 +1,29 @@
 <x-app-layout>
     <div>
         <div class="text-2xl mb-5">
-            Католог
+            Категорий
         </div>
-
-
-        <a class="bg-blue-400 block w-fit mb-5 rounded-md p-2" href="{{route('catalog.create')}}">
+        <a href="{{route('catalog.categories.create', ['catalog' => $catalog->slug])}}" class="bg-blue-400 mb-5  w-fit flex p-2 rounded-md gap-x-2 items-center">
+            <span class="text-white">
+                Добавить категорию
+            </span>
             <span>
                     <img src="{{asset('icons/add.svg')}}" alt="Add Icon">
             </span>
         </a>
 
         <x-block>
-            <div class="grid grid-cols-4 gap-4 border-b pb-2 mb-2  ">
+            <div class="grid grid-cols-3 gap-4 border-b pb-2 mb-2  ">
                 <div class="font-bold">#ID</div>
                 <div class="font-bold">Заголовок</div>
-                <div class="font-bold">Категории</div>
                 <div class="font-bold text-right">Управление</div>
             </div>
-            <div class="grid grid-cols-4 gap-4 py-2 items-center">
-                @foreach($catalogs as $catalog)
-                    <div class="text-left"> {{$catalog->id}} </div>
-                    <div class="text-left"> {{$catalog->name}} </div>
-                    <a  class="underline text-blue-400 text-left" href="{{route('catalog.categories.index', $catalog->slug )}}" >Список категорий ({{ $catalog->categories->count()}})</a>
+            <div class="grid grid-cols-3 gap-4 py-2 items-center">
+                @foreach($categories as $category)
+                    <div class="text-left"> {{$category->id}} </div>
+                    <div class="text-left"> {{$category->title}} </div>
                     <div class="text-center">
                         <div class="flex justify-end gap-x-2">
-                            <a class="bg-blue-400 mb-5 rounded-md p-2" href="{{route('catalog.show', $catalog->slug)}}">
-                               <span>
-                                  <img src="{{asset('icons/view.svg')}}" alt="Edit Icon">
-                               </span>
-                            </a>
                             <a class="bg-blue-400 mb-5 rounded-md p-2" href="{{route('catalog.edit', $catalog->id)}}">
                                <span>
                                   <img src="{{asset('icons/edit.svg')}}" alt="Edit Icon">
@@ -39,7 +33,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" class="bg-red-400 mb-5 flex items-center justify-center rounded-md p-2" onclick="confirmDelete({{ $catalog->id }})" >
-                                  <img src="{{asset('icons/delete.svg')}}" alt="Delete Icon">
+                                    <img src="{{asset('icons/delete.svg')}}" alt="Delete Icon">
                                 </button>
                             </form>
                         </div>

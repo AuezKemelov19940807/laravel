@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Catalog;
 class CatalogController extends Controller
@@ -21,8 +22,44 @@ class CatalogController extends Controller
      */
     public function create()
     {
+
         return view('catalog.create');
     }
+
+    public function createCategory($catalogSlug)
+    {
+        $catalog = Catalog::where('slug', $catalogSlug)->firstOrFail();
+        return view('catalog.categories.create', ['catalog' => $catalog]);
+    }
+    public function indexCategory($catalogSlug) {
+        $catalog = Catalog::where('slug', $catalogSlug)->firstOrFail();
+        $categories = $catalog->categories;
+        return view('catalog.categories.index', ['catalog' => $catalog, 'categories' => $categories]);
+    }
+
+
+    public function storeCategory(Request $request, $catalogSlug)
+    {
+        // Получаем каталог по slug
+        $catalog = Catalog::where('slug', $catalogSlug)->firstOrFail();
+
+        // Валидация данных формы
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'text' => 'required|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  // Проверка на допустимый формат изображения
+        ]);
+
+        // Создаем новую категорию, привязывая её к выбранному каталогу
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->catalog_id = $catalog->id;  // Связываем категорию с каталогом
+        $category->slug = \Str::slug($request->input('name')); // Генерируем slug для категории
+        $category->save();
+
+        return redirect()->route('catalog.show', ['slug' => $catalog->slug])->with('success', 'Category created successfully.');
+    }
+
 
     /**
      * Store a newly created resource in storage.

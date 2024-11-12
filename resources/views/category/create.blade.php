@@ -4,14 +4,14 @@
             Создание категорий
         </div>
         <x-block>
+
             <form class="flex flex-col gap-y-5"  action="{{route('category.store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <!-- Выбор каталога -->
                 <div class="flex flex-col gap-y-2 w-fit" >
-                    <label  class="text-xl"  for="catalog_id">Выбрать категорию</label>
+                    <label for="catalog_id" class="text-xl" >Выбрать категорию</label>
                     <select class="border-[#265078] rounded-md" id="catalog_id" name="catalog_id" required>
-
                         @foreach($catalogs as $catalog)
                             <option value="{{ $catalog->id }}">{{ $catalog->name }}</option>
                         @endforeach
@@ -19,11 +19,11 @@
                 </div>
 
                 <div class="grid grid-cols-3 gap-x-5 items-center">
-                    <label for="Name" class="flex flex-col gap-y-2" >
-                        <span class="text-xl" >Название категорий</span>
+                    <label for="Title" class="flex flex-col gap-y-2">
+                        <span class="text-xl">Название категорий</span>
                         <input class="border-[#265078] rounded-md" placeholder="Введите название категорий" type="text" name="title">
                     </label>
-                    <label for="Name" class="flex flex-col gap-y-2" >
+                    <label for="Text" class="flex flex-col gap-y-2" >
                         <span class="text-xl" >Описание категорий</span>
                         <input class="border-[#265078] rounded-md" placeholder="Введите описание категорий" type="text" name="text">
                     </label>
@@ -64,33 +64,22 @@
 
         </x-block>
     </div>
-
 <script>
-
 
 
     ClassicEditor
         .create(document.querySelector('.top_description'), {
-
             toolbar: [
                 'heading', '|',
                 'bold', 'italic', 'link', '|',
                 'bulletedList', 'numberedList', '|',
                 'blockQuote', '|',
                 'insertTable', '|',
-                'codeBlock', '|',
-                'alignment', '|',
                 'undo', 'redo'
             ],
-
-
             language: 'ru', // Устанавливаем русский язык для интерфейса
             ckfinder: {
                 uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            },
-            // Включаем плагин выравнивания текста
-            alignment: {
-                options: ['left', 'center', 'right', 'justify'] // Доступные опции выравнивания
             }
         })
         .then(editor => {
@@ -102,27 +91,17 @@
 
     ClassicEditor
         .create(document.querySelector('.bottom_description'), {
-
             toolbar: [
                 'heading', '|',
                 'bold', 'italic', 'link', '|',
                 'bulletedList', 'numberedList', '|',
                 'blockQuote', '|',
                 'insertTable', '|',
-                'codeBlock', '|',
-                'alignment', '|',
-                'undo', 'redo',
-                'accessibilityHelp'
+                'undo', 'redo'
             ],
-
-
-            language: 'ru', // Устанавливаем русский язык для интерфейса
+            language: 'ru',
             ckfinder: {
                 uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-            },
-            // Включаем плагин выравнивания текста
-            alignment: {
-                options: ['left', 'center', 'right', 'justify'] // Доступные опции выравнивания
             }
         })
         .then(editor => {
@@ -131,9 +110,6 @@
         .catch(error => {
             console.error('Error during initialization of the editor', error);
         });
-
-
-
 
 </script>
 

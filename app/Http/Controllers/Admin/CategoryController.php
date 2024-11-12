@@ -27,7 +27,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'text' => 'required|string|max:1000',
@@ -50,6 +49,8 @@ class CategoryController extends Controller
             'budget' => $budget,
             'image' => $imagePath,
         ]);
+
+
 
         return redirect()->route('catalog.index')->with('success', 'Category created successfully.');
     }

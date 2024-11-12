@@ -1,7 +1,7 @@
 <x-app-layout>
     <div>
         <div class="text-2xl mb-5">
-            Добавить
+            Добавение категорий
         </div>
         <a  class="bg-blue-400 mb-5 block p-2 rounded-md w-fit " href="{{route('catalog.index')}}" >
                  <span>
@@ -53,12 +53,12 @@
     </script>
     <style>
 
-     .name.active {
-         border: 1px solid #2563eb;
-     }
-    .error.active {
-        display: none;
-    }
+        .name.active {
+            border: 1px solid #2563eb;
+        }
+        .error.active {
+            display: none;
+        }
 
     </style>
 </x-app-layout>
