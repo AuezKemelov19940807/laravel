@@ -37,6 +37,7 @@ class CategoryController extends Controller
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('categories', 'public');
+            $imagePath = asset('storage/' . $imagePath);
         }
 
         $budget = $request->has('budget') ? 1 : 0;
@@ -49,8 +50,6 @@ class CategoryController extends Controller
             'budget' => $budget,
             'image' => $imagePath,
         ]);
-
-
 
         return redirect()->route('catalog.index')->with('success', 'Category created successfully.');
     }

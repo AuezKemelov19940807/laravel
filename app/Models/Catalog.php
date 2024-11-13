@@ -10,8 +10,9 @@ class Catalog extends Model
     protected $fillable = [
         'name',
         'slug',
+        'link'
     ];
-
+    protected $hidden = ['created_at', 'updated_at'];
 
     protected static function boot() {
         parent::boot();
@@ -19,11 +20,13 @@ class Catalog extends Model
 
         static::creating(function ($catalog) {
             $catalog->slug = Str::slug($catalog->name);
+            $catalog->link = Str::slug($catalog->slug);
         });
 
 
         static::updating(function ($catalog) {
             $catalog->slug = Str::slug($catalog->name);
+            $catalog->link = Str::slug($catalog->slug);
         });
 
     }

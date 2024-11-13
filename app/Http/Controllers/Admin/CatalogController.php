@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Catalog;
+use Illuminate\Support\Str;
 class CatalogController extends Controller
 {
     /**
@@ -40,24 +41,40 @@ class CatalogController extends Controller
 
     public function storeCategory(Request $request, $catalogSlug)
     {
+
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'text' => 'nullable|string',
+            'top_description' => 'nullable|string',
+            'bottom_description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
         // Получаем каталог по slug
         $catalog = Catalog::where('slug', $catalogSlug)->firstOrFail();
 
-        // Валидация данных формы
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'text' => 'required|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',  // Проверка на допустимый формат изображения
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $imagePath = asset('storage/' . $imagePath);
+        }
+
+
+        $budget = $request->has('budget') ? 1 : 0;
+
+        Category::create([
+            'title' => $request->input('title'),
+            'text' => $request->input('text'),
+            'top_description' => $request->input('top_description'),
+            'bottom_description' => $request->input('bottom_description'),
+            'budget' => $budget,
+            'image' => $imagePath,
+            'catalog_id' => $catalog->id,
         ]);
 
-        // Создаем новую категорию, привязывая её к выбранному каталогу
-        $category = new Category();
-        $category->name = $request->input('name');
-        $category->catalog_id = $catalog->id;  // Связываем категорию с каталогом
-        $category->slug = \Str::slug($request->input('name')); // Генерируем slug для категории
-        $category->save();
 
-        return redirect()->route('catalog.show', ['slug' => $catalog->slug])->with('success', 'Category created successfully.');
+
+        return redirect()->route('catalog.categories.index', $catalog->slug)->with('success', 'Category created successfully.');
     }
 
 

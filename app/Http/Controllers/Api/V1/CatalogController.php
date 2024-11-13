@@ -10,7 +10,19 @@ class CatalogController extends Controller
     public function index()
     {
         $catalogs = Catalog::all();
-        return response()->json($catalogs);
+
+        if ($catalogs->isEmpty()) {
+            return response()->json([
+                'message' => 'Данные каталога пусты',
+                'data' => []
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $catalogs
+        ]);
+
     }
 
 
@@ -19,10 +31,21 @@ class CatalogController extends Controller
 
         $catalog = Catalog::where('slug', $slug)->firstOrFail();
 
-
         $categories = $catalog->categories;
 
-        return response()->json($categories);
+
+        if ($categories->isEmpty()) {
+            return response()->json([
+                'message' => 'Данные категорий пусты',
+                'data' => []
+            ], 404);
+        }
+
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $categories
+        ]);
 
     }
 
