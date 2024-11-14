@@ -55,8 +55,8 @@ class CatalogController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('categories', 'public');
-            $imagePath = asset('storage/' . $imagePath);
+            $imagePath = $request->file('image')->store('public/categories');
+            $imagePath = asset('storage/' . str_replace('public/', '', $imagePath));
         }
 
 
